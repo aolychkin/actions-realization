@@ -1,0 +1,9 @@
+# See: https://taskfile.dev/api/
+
+version: "3"
+
+tasks:
+  run:
+    desc: "Run app"
+    cmds:
+      - go run cmd/funds/main.go --config=./config/local.yaml
