@@ -6,4 +6,4 @@ tasks:
   run:
     desc: "Run app"
     cmds:
-      - go run cmd/funds/main.go --config=./config/local.yaml
+      - go run cmd/actions/main.go --config=./config/local.yaml

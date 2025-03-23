@@ -1,0 +1,5 @@
+env: "local" #dev, prod
+storage_path: "./storage/actions.db"
+grpc:
+  port: 44044
+  timeout: 10h #5s
