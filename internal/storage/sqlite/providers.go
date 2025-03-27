@@ -33,11 +33,10 @@ func (s *Storage) FieldConfigByIDArray(
 	ctx context.Context,
 	IDs []string,
 ) ([]models.FieldConfig, error) {
-	const op = "storage.sqlite.providers.Board"
+	const op = "storage.sqlite.providers.FieldConfigByIDArray"
 	var fieldConfigs []models.FieldConfig
-	var fieldConfig models.FieldConfig
-
 	for _, fieldConfigID := range IDs {
+		var fieldConfig models.FieldConfig
 		err := s.db.Model(&models.FieldConfig{}).Preload("FieldType").First(&fieldConfig, "id = ?", fieldConfigID).Error
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return []models.FieldConfig{}, fmt.Errorf("%s: %w", op, storage.ErrBoardNotFound)

@@ -3,14 +3,14 @@ module actions
 go 1.23.1
 
 require (
-	github.com/aolychkin/actions-contract v1.0.11
+	github.com/aolychkin/actions-contract v1.0.12
 	github.com/google/uuid v1.6.0
 	github.com/ilyakaznacheev/cleanenv v1.5.0
 	google.golang.org/grpc v1.71.0
 	gorm.io/gorm v1.25.12
 )
 
-require github.com/mpvl/unique v0.0.0-20150818121801-cbe035fff7de // indirect
+require github.com/mpvl/unique v0.0.0-20150818121801-cbe035fff7de
 
 require (
 	github.com/BurntSushi/toml v1.2.1 // indirect

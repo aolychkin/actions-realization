@@ -39,7 +39,6 @@ func (b *Board) GetBoard(ctx context.Context, id string) (*board_v1.TBoard, erro
 	log.Info("board data get successfully")
 
 	columns := []*board_v1.TColumn{}
-	var sprint_names []string
 	for _, column := range board.OnBoardColumns {
 		steps := []*board_v1.TCurrentStep{}
 		for _, step := range column.Steps {
@@ -52,11 +51,10 @@ func (b *Board) GetBoard(ctx context.Context, id string) (*board_v1.TBoard, erro
 
 		cards := []*board_v1.TCard{}
 		for _, card := range column.OnBoardActions {
-			var sprints []string
+			var sprintIDs []string
 			//TODO: поправить ссанину и путаницу со спринтами (прото, инициализация, получение данных)
 			for _, sprint := range card.Action.Sprints {
-				sprints = append(sprints, sprint.ID)
-				sprint_names = append(sprint_names, sprint.Name)
+				sprintIDs = append(sprintIDs, sprint.ID)
 			}
 
 			fields := []*board_v1.TActionField{}
@@ -74,7 +72,7 @@ func (b *Board) GetBoard(ctx context.Context, id string) (*board_v1.TBoard, erro
 				ColumnId:      card.OnBoardColumnID,
 				ActionNum:     uint32(card.Action.ActionNum),
 				CurrentStepId: card.Action.CurrentStepID,
-				SprintIds:     sprints,
+				SprintIds:     sprintIDs,
 				Fields:        fields,
 			})
 		}
@@ -89,10 +87,10 @@ func (b *Board) GetBoard(ctx context.Context, id string) (*board_v1.TBoard, erro
 
 	//TODO: убрать задвоение спринтов (в инициализации бд)
 	sprints := []*board_v1.TSprint{}
-	unique.Strings(&sprint_names)
-	for _, sprint := range sprint_names {
+	for _, sp := range board.Sprints {
 		sprints = append(sprints, &board_v1.TSprint{
-			Name: sprint,
+			Id:   sp.ID,
+			Name: sp.Name,
 		})
 	}
 
@@ -112,6 +110,7 @@ func (b *Board) GetBoard(ctx context.Context, id string) (*board_v1.TBoard, erro
 	//TODO: закинуть этот код в работу со стором)
 	fieldConfigs := []*board_v1.TFieldConfig{}
 	unique.Strings(&fieldConfigIDs)
+
 	fConfigs, err := b.boardProvider.FieldConfigByIDArray(ctx, fieldConfigIDs)
 	if err != nil {
 		log.Error("failed to getting fieldConfigs", sl.Err(err))
