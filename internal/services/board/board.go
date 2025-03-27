@@ -20,6 +20,10 @@ type BoardProvider interface {
 		ctx context.Context,
 		BoardID string,
 	) (board models.Board, err error)
+	FieldConfigByIDArray(
+		ctx context.Context,
+		IDs []string,
+	) (board []models.FieldConfig, err error)
 }
 
 // Переменные ошибок

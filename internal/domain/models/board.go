@@ -17,6 +17,8 @@ type OnBoardColumn struct {
 	Steps          []*CurrentStep `gorm:"many2many:column_steps;"`
 	OnBoardActions []OnBoardAction
 }
+
+// TODO: При перетаскивании карточки назначается первый в списке статус проекта карточки действия
 type CurrentStep struct {
 	Base
 	Name             string
